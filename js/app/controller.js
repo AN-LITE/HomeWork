@@ -67,21 +67,26 @@ export class Controller {
         e.stopPropagation();
 
         if(e.target.classList.contains('btn-delete')){
-           
-            const itemId = +e.target.getAttribute('data-id');
 
-            let data = this.model.data;
+           const itemDel= e.target.closest('.itemContainer');
 
-            data = data.filter(item => item.id !== itemId)
-            console.log(data);
+           this.view.removeToDoItem(itemDel);
 
-            localStorage.setItem(this.model.formId, JSON.stringify(data))
 
-            document.getElementById('todoItems').innerHTML='' ;
-
-            this.model.data.forEach(item => {
-                this.view.renderToDoItem(item);
-            })
+            // const itemId = +e.target.getAttribute('data-id');
+            //
+            // let data = this.model.data;
+            //
+            // data = data.filter(item => item.id !== itemId)
+            // console.log(data);
+            //
+            // localStorage.setItem(this.model.formId, JSON.stringify(data))
+            //
+            // document.getElementById('todoItems').innerHTML='' ;
+            //
+            // this.model.data.forEach(item => {
+            //     this.view.renderToDoItem(item);
+            // })
 
 
             // this.view.removeToDoItem(e.target);
@@ -93,10 +98,10 @@ export class Controller {
 
     loaderHandler = () =>{
 
-        const data = this.model.data[Symbol.iterator]();
-
+       let data = this.model.data;
 
         if(data){
+            data = data[Symbol.iterator]();
             for(let key of data){
                 this.view.renderToDoItem(key)
             }
